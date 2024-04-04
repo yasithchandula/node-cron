@@ -30,8 +30,11 @@ function addWeatherRecords() {
 
     async function postWeatherData(data) {
         const url = 'http://localhost:8070/wcast/addrecord';
+        const headers = {
+            'authkey': process.env.AUTHKEY
+        }
         try {
-            const response = await axios.post(url, data);
+            const response = await axios.post(url, data ,{headers});
             return response.data;
         } catch (error) {
             console.error('error', error);
@@ -83,8 +86,11 @@ function deleteWeatherRecords(){
 
     async function deleteWeatherCall(data) {
         const url = 'http://localhost:8070/wcast/delete';
+        const headers = {
+            'authkey': process.env.AUTHKEY
+        }
         try {
-            const response = await axios.delete(url);
+            const response = await axios.delete(url,{headers});
             return response.data;
         } catch (error) {
             console.error('error', error);
@@ -104,6 +110,6 @@ function deleteWeatherRecords(){
 }
 
 const task = cron.schedule('*/5 * * * * *', addWeatherRecords);
-const task2=cron.schedule('*/10 * * * * *', deleteWeatherRecords);
+const task2=cron.schedule('*/13 * * * * *', deleteWeatherRecords);
 
 module.exports = task;
